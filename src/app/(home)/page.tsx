@@ -24,10 +24,10 @@ export default function HomePage() {
                 <span className="text-fd-primary">/</span> Explore the docs
             </h2>
             <Cards>
-                <Card title="CTF write-ups" href="https://www.clear-byte.com/docs/ctf" />
-                <Card title="Bug bounty reports" href="https://www.clear-byte.com/docs/bug-bounty" />
-                <Card title="Reference guide" href="https://www.clear-byte.com/docs/reference" />
-                <Card title="Tools & resources" href="https://www.clear-byte.com/docs/tools" />
+                <Card title="CTF write-ups" href="https://www.clear-byte.com/docs/Write-Ups/CTF" />
+                <Card title="Bug bounty reports" href="https://www.clear-byte.com/docs/Write-Ups/Bug-Bounty" />
+                <Card title="Reference guide" href="https://www.clear-byte.com/docs/Reference-Guide" />
+                <Card title="Tools & resources" href="https://www.clear-byte.com/docs/Tools" />
             </Cards>
 
             <p className="text-sm text-fd-muted-foreground mt-16">
