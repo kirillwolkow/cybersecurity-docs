@@ -1,0 +1,56 @@
+---
+title: Authentication Vulnerabilities
+---
+
+## How do authentication vulnerabilities arise?
+
+Most vulnerabilities in authentication mechanisms occur in one of two ways:
+
+* The authentication mechanisms are weak because they fail to adequately protect against brute-force attacks.
+* Logic flaws or poor coding in the implementation allow the authentication mechanisms to be bypassed entirely by an attacker (also called "broken authentication").
+
+## Vulnerabilities in password-based login
+
+Users authenticate to a system with a username/email and a password. Knowing the password is proof for the website that the user is authentic (thus authenticated).&#x20;
+
+This means that the security of the website is compromised if an attacker is able to either obtain or guess the login credentials of another user.
+
+### Brute-forcing usernames (Username enumeration)
+
+Usernames can be easy to guess e.g. with emails which follow a pattern (e.g. <firstname.lastname@company.com>).&#x20;
+
+And if there are not obvious patterns, it's common that a company has high-privileged accounts like admin, administrator, or support. You can also guess and find out usernames, if the HTTP response of a signup form gives you valuable information (e.g. "a user with this email already exists"). Check also for other information like status codes, error message, or response times.
+
+### Flawed brute-force protection
+
+Sometimes brute-forcing is protected e.g. by locking the account that the user is trying to access if they make too many failed login attempts.&#x20;
+
+Or they block the remote user's IP address if they make too many login attempts in quick succession. This can sometimes be circumvented with IP spoofing (changing HTTP headers like [X-FORWARDED-FOR](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/X-Forwarded-For)). Another method is to have a real account and before you're getting blocked you sign in with the real account.
+
+This can reset the block counter and thus enables normal brute-forcing.
+
+### Credential Stuffing
+
+Account locking fails to protect against [credential stuffing](https://owasp.org/www-community/attacks/Credential_stuffing) attacks.&#x20;
+
+## Vulnerabilities in multi-factor authentication
+
+Websites can ask for an additional factor besides password to authenticate a user.&#x20;
+
+This can be a code sent by SMS or Email, or a generated code from a physical device. The latter is considered a real or true factor unlike the first two. Imagine a malicious actor possess email and password of a victim. If the attacker logs in to a website, it gets the code sent to the email, where the email account is likely to have the same password as the website. So here the website is asking the user something which the website already indirectly knows.
+
+A method to circumvent multi-factor authentication is via bypassing the second check or by brute-forcing the second factor (which are mostly 4 or 6 digits).
+
+## Vulnerabilities in other authentication methods
+
+### Cookies
+
+A handy feature of websites are "remember me" or "stay logged in".
+
+The website creates a cookie with a due date in which the cookie is valid and this is stored in the users browsers. So anyone with this cookie can be logged in. Sometimes cookies use predictable values like encrypting or encoding users credentials and timestamp. This can be used to guess another users cookie.
+
+### Password Resets
+
+Password reset is a very hand feature for users, but if poorly implemented is open to various attacks.
+
+Sending password by email and not preventing host spoofing (e.g. X-FORWARDED-HOST header) can lead to users getting emails from exploit servers. And if the URL is dynamically constructed, this can lead to another attack surface, by gaming the logic of user token and request body.

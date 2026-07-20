@@ -1,0 +1,25 @@
+---
+title: Persistence Mechanism
+---
+
+## Cronjobs
+
+```
+cat /etc/crontab
+```
+
+## Service Startup
+
+Like Windows, services can be set up in Linux that will start and run in the background after every system boot. A list of services can be found in the `/etc/init.d` directory. We can check the contents of the directory by using the `ls` utility.
+
+## .Bashrc
+
+When a bash shell is spawned, it runs the commands stored in the .bashrc file. This file can be considered as a startup list of actions to be performed. Hence it can prove to be a good place to look for persistence.
+
+```
+cat ~/.bashrc
+```
+
+## Misc
+
+System-wide settings are stored in `/etc/bash.bashrc` and `/etc/profile` files, so it is often a good idea to take a look at these files as well.

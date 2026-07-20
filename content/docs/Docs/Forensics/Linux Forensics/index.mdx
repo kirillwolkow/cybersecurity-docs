@@ -1,0 +1,41 @@
+---
+title: Linux Forensics
+---
+
+## Basic Enumeration
+
+### OS information
+
+```
+cat /etc/os-release
+```
+
+### User Accounts
+
+The `/etc/passwd` file contains information about the user accounts that exist on a Linux system. We can use the `cat` utility to read this file. The output contains 7 colon-separated fields, describing username, password information, user id (uid), group id (gid), description, home directory information, and the default shell that executes when the user logs in. It can be noticed that just like Windows, the user-created user accounts have uids 1000 or above.
+
+```
+cat /etc/passwd
+
+// or for better visability
+cat /etc/passwd| column -t -s :
+
+
+// if passwords are marked with "x", then it's found in /etc/shadow
+```
+
+### Group Information
+
+The `/etc/group` file contains information about the different user groups present on the host. It can be read using the cat utility.
+
+### Sudoers List
+
+A Linux host allows only those users to elevate privileges to `sudo`, which are present in the Sudoers list. This list is stored in the file `/etc/sudoers` and can be read using the `cat` utility. You will need to elevate privileges to access this file.
+
+### Login Information
+
+In the /var/log directory, we can find log files of all kinds including `wtmp` and `btmp`. The `btmp` file saves information about failed logins, while the `wtmp` keeps historical data of logins. These files are not regular text files that can be read using `cat`, `less` or `vim`; instead, they are binary files, which have to be read using the `last` utility. You can learn more about the `last` utility by reading its man page.
+
+### Authentication Logs
+
+Every user that authenticates on a Linux host is logged in the auth log. The auth log is a file placed in the location `/var/log/auth.log`. It can be read using the `cat` utility, however, given the size of the file, we can use `tail`, `head`, `more` or `less` utilities to make it easier to read.

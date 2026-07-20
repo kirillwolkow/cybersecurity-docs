@@ -1,0 +1,60 @@
+---
+title: File Analysis
+---
+
+### file command
+
+> Determine file type
+
+file tests each argument in an attempt to classify it. There are three sets of tests, performed in this order: filesystem tests, magic tests, and language tests. The first test that succeeds causes the file type to be printed.
+
+```
+file song.mp3
+
+## output
+song.mp3: Audio file with ID3 version 2.3.0, contains:MPEG ADTS, layer III, v1, 192 kbps, 44.1 kHz, Stereo
+```
+
+### exiftool command
+
+> Read and write meta information of files
+
+A command-line interface to Image::ExifTool, used for reading and writing meta information in a variety of file types. FILE is one or more source file names, directory names, or "-" for the standard input. Metadata is read from source files and printed in readable form to the console (or written to output text files with -w).
+
+```
+exiftool song.mp3
+
+## output
+ExifTool Version Number         : 11.88
+File Name                       : song.mp3
+Directory                       : .
+File Size                       : 4.4 MB
+File Modification Date/Time     : 2024:10:24 10:50:46+01:00
+File Access Date/Time           : 2024:12:01 20:57:44+00:00
+File Inode Change Date/Time     : 2024:12:01 20:57:16+00:00
+File Permissions                : rwxr-xr-x
+File Type                       : MP3
+File Type Extension             : mp3
+MIME Type                       : audio/mpeg
+MPEG Audio Version              : 1
+Audio Layer                     : 3
+Audio Bitrate                   : 192 kbps
+Sample Rate                     : 44100
+Channel Mode                    : Stereo
+MS Stereo                       : Off
+Intensity Stereo                : Off
+Copyright Flag                  : False
+Original Media                  : False
+Emphasis                        : None
+ID3 Size                        : 2176
+Artist                          : Tyler Ramsbey
+Album                           : Rap
+Title                           : Mount HackIt
+Encoded By                      : Mixcraft 10.5 Recording Studio Build 621
+Year                            : 2024
+Genre                           : Rock
+Track                           : 0/1
+Comment                         :
+Date/Time Original              : 2024
+Duration                        : 0:03:11 (approx)
+```
