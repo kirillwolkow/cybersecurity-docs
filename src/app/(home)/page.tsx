@@ -30,6 +30,19 @@ export default function HomePage() {
                 <Card title="Tools & resources" href="https://www.clear-byte.com/docs/Tools" />
             </Cards>
 
+            <h2 className="text-2xl mt-16 mb-4 font-medium">
+                <span className="text-fd-primary">/</span> Get in touch
+            </h2>
+            <p className="text-base tracking-tight leading-snug font-light text-fd-muted-foreground mb-6 col-span-full md:text-lg">
+                Found a bug in the write-ups, have a research question, or just want to talk security?
+            </p>
+            <Link
+                href="mailto:info@clear-byte.com"
+                className="mx-auto inline-flex items-center gap-2 rounded-full border border-fd-primary px-6 py-2 text-fd-primary hover:bg-fd-primary hover:text-fd-primary-foreground transition-colors"
+            >
+                info@clear-byte.com
+            </Link>
+
             <p className="text-sm text-fd-muted-foreground mt-16">
                 Written by Kenny Wolf - aka Hephaest0s - see more at{' '}
                 <Link href="https://kennywolf.info" className="text-fd-primary underline underline-offset-4 hover:opacity-80">
