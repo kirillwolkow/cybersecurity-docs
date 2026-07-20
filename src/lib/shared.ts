@@ -1,4 +1,4 @@
-export const appName = 'Hephaest0s Cybersecurity Docs';
+export const appName = 'Clear Byte';
 export const docsRoute = '/docs';
 export const docsImageRoute = '/og/docs';
 export const docsContentRoute = '/llms.mdx/docs';

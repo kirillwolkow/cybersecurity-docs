@@ -10,3 +10,13 @@ html > body[data-scroll-locked] {
   margin-right: 0px !important;
   --removed-body-scroll-bar-size: 0px !important;
 }
+
+@theme {
+  --color-fd-primary: hsl(174, 80%, 32%);
+  --color-fd-primary-foreground: hsl(0, 0%, 100%);
+}
+
+.dark {
+  --color-fd-primary: hsl(174, 65%, 50%);
+  --color-fd-primary-foreground: hsl(0, 0%, 5%);
+}
